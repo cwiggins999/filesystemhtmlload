@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://localhost/js/main.js"></script>
+  </head>
+  <body>
+    <script>
+        window.onload = start;
+
+        function start() {
+            mylibrary.getDeviceInfo().then(info => {
+         console.log("Page 2! device is " + JSON.stringify(info));
+          });
+     }    
+         </script>    
+    <H1>TEST INDEX PAGE 2!!</H1>
+  </body>
