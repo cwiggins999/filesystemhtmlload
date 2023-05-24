@@ -8,8 +8,9 @@
         window.onload = start;
 
         function start() {
+              //just verifying Capacitor plugins are accessible (main.js gives that access)
             mylibrary.getDeviceInfo().then(info => {
-         console.log("Page 2! device is " + JSON.stringify(info));
+         console.log("Page 2!!!! device is " + JSON.stringify(info));
           });
      }    
          </script>    

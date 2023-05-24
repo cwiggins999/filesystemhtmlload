@@ -9,21 +9,33 @@
    window.onload = start;
 
    async function start() {
+    //just verifying Capacitor plugins are accessible (main.js gives that access)
        mylibrary.getDeviceInfo().then(info => {
-    console.log("Page 1 device is " + JSON.stringify(info));
-     });
+          console.log("Page 1 device is " + JSON.stringify(info));
+        });
 
-     const localfile = await FSPlugin.getUri({
+     const secondpage = "page2.html";
+     const localbase = await FSPlugin.getUri({
                 directory: DirectoryEnum.External,
-                path:  "page2.html"
+                path:  ""
             });
-    console.log("URI is " + localfile.uri);
-    const filetoloadlocal = Capacitor.convertFileSrc(localfile.uri);
-    console.log("local file is " + filetoloadlocal);
-    
-    //window.location.href = "page2.html";
-     window.location.href = filetoloadlocal;
-}    
-    </script>
+    const fulllocalbase = localbase.uri + "/newweb";
+    console.log("New local base is " + fulllocalbase);
+
+
+   if (Capacitor.getPlatform() != 'web')
+   {
+    //This code doesn't work in Capacitor "WEB" - not implemented
+     if(window.Ionic && window.Ionic.WebView) {
+        console.log ("found Ionic object");
+        window.Ionic.WebView.setServerBasePath(fulllocalbase);
+        window.Ionic.WebView.persistServerBasePath();
+        //window.location.href = secondpage;
+     }
+   }   
+  }
+
+
+</script>
     <H1>TEST INDEX PAGE 1</H1>
   </body>
