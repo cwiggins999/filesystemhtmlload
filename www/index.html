@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="http://localhost/js/main.js"></script>
+    <script src="js/main.js"></script>
+    <script src="localinterocitor.js" type="module"></script>    
   </head>
   <body>
     <script>
+
+   const newWebDir = "PatronetX/Interocitor";
 
    window.onload = start;
 
@@ -15,13 +18,16 @@
         });
 
      const secondpage = "page2.html";
-     const localbase = await FSPlugin.getUri({
-                directory: DirectoryEnum.External,
+     const localbase = await CapFSPlugin.getUri({
+                directory: FSDirectoryEnum.Library,
                 path:  ""
             });
-    const fulllocalbase = localbase.uri + "/newweb";
+    const fulllocalbase = localbase.uri.replace("file://", "") + '/' + newWebDir;
     console.log("New local base is " + fulllocalbase);
 
+    //this assumes the basic Patronet directory structure is in place, and will build the web in the Interocitor directory
+    //subsequent Interocitor.html version checks will then overlay that file, renamed "Index.html" because of Capacitor restrictions
+    await buildNewWeb();
 
    if (Capacitor.getPlatform() != 'web')
    {
@@ -29,12 +35,46 @@
      if(window.Ionic && window.Ionic.WebView) {
         console.log ("found Ionic object");
         window.Ionic.WebView.setServerBasePath(fulllocalbase);
-        window.Ionic.WebView.persistServerBasePath();
-        //window.location.href = secondpage;
+        //window.Ionic.WebView.persistServerBasePath();
+
      }
    }   
+   else {
+    console.log("Can't load from storage on Web");
+    //window.location.href = secondpage;
+   }
   }
 
+  async function buildNewWeb() {
+    var fe = await appFileSystem.exists(newWebDir);
+    console.log(newWebDir + " exists = " + fe);
+    await appFileSystem.makedir(newWebDir + "/js");
+    
+    await copytoNewWeb("page2.html", newWebDir, "index.html");
+    //await copytoNewWeb("js/176.main.js", newWebDir + "/js") ;
+    //await copytoNewWeb("js/961.main.js", newWebDir + "/js") ;
+    //await copytoNewWeb("js/main.js", newWebDir + "/js") ;
+    //await copytoNewWeb("js/main.js.LICENSE.txt", newWebDir + "/js") ;
+
+  }
+
+  async function copytoNewWeb(filename, dir, newname)
+  {
+      const copytoname = newname === undefined ? filename : newname;
+      const targetPath = newWebDir + "/" + copytoname;
+      console.log("Copying " + filename + " to " + targetPath );
+
+      //console.log("Downloading via CapacitorHttp");
+      const options = {
+        url: "https://localhost/" + filename,
+        responseType: 'text'
+      }
+      const response = await CapacitorHttp.get(options);
+      console.log("Capacitor download data length = " + response.data.length);
+      console.log("contents = " + response.data);
+      //await appFileSystem.writefile(targetPath,response.data);
+
+  }
 
 </script>
     <H1>TEST INDEX PAGE 1</H1>
