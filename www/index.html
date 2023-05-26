@@ -48,7 +48,7 @@
   async function buildNewWeb() {
     var fe = await appFileSystem.exists(newWebDir);
     console.log(newWebDir + " exists = " + fe);
-    await appFileSystem.makedir(newWebDir + "/js");
+    //await appFileSystem.makedir(newWebDir + "/js");
     
     await copytoNewWeb("page2.html", newWebDir, "index.html");
     //await copytoNewWeb("js/176.main.js", newWebDir + "/js") ;
