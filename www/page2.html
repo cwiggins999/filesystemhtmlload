@@ -5,14 +5,26 @@
   </head>
   <body>
     <script>
-        window.onload = start;
+        window.onload = function() {
+          start();
+        };
 
         function start() {
               //just verifying Capacitor plugins are accessible (main.js gives that access)
-            mylibrary.getDeviceInfo().then(info => {
-         console.log("Page 2!!!! device is " + JSON.stringify(info));
+            /*
+              mylibrary.getDeviceInfo().then(info => {
+              console.log("Page 2!!!! device is " + JSON.stringify(info));
           });
-     }    
-         </script>    
+          */
+        }
+        
+        window.switchToPage1 = function() {
+          if(window.Ionic && window.Ionic.WebView) {
+              console.log ("found Ionic object");
+              window.Ionic.WebView.setServerAssetPath("public");
+          }
+        }
+    </script>    
     <H1>TEST INDEX PAGE 2!!</H1>
+    <button onclick="switchToPage1()">Switch To Page 1</button>
   </body>

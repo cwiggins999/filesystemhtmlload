@@ -11,13 +11,9 @@
 
    window.onload = start;
 
-   async function start() {
-    //just verifying Capacitor plugins are accessible (main.js gives that access)
-       mylibrary.getDeviceInfo().then(info => {
-          console.log("Page 1 device is " + JSON.stringify(info));
-        });
-
-     const secondpage = "page2.html";
+   window.switchToPage2 = async function() {
+    
+    const secondpage = "page2.html";
      const localbase = await CapFSPlugin.getUri({
                 directory: FSDirectoryEnum.Library,
                 path:  ""
@@ -32,12 +28,14 @@
    if (Capacitor.getPlatform() != 'web')
    {
     //This code doesn't work in Capacitor "WEB" - not implemented
-     if(window.Ionic && window.Ionic.WebView) {
+    
+    if(window.Ionic && window.Ionic.WebView) {
         console.log ("found Ionic object");
         window.Ionic.WebView.setServerBasePath(fulllocalbase);
         //window.Ionic.WebView.persistServerBasePath();
 
      }
+     
    }   
    else {
     console.log("Can't load from storage on Web");
@@ -45,16 +43,23 @@
    }
   }
 
+   async function start() {
+    //just verifying Capacitor plugins are accessible (main.js gives that access)
+       mylibrary.getDeviceInfo().then(info => {
+          console.log("Page 1 device is " + JSON.stringify(info));
+        });
+  }
+
   async function buildNewWeb() {
-    var fe = await appFileSystem.exists(newWebDir);
-    console.log(newWebDir + " exists = " + fe);
+    //var fe = await appFileSystem.exists(newWebDir);
+    //console.log(newWebDir + " exists = " + fe);
     //await appFileSystem.makedir(newWebDir + "/js");
     
     await copytoNewWeb("page2.html", newWebDir, "index.html");
-    //await copytoNewWeb("js/176.main.js", newWebDir + "/js") ;
-    //await copytoNewWeb("js/961.main.js", newWebDir + "/js") ;
-    //await copytoNewWeb("js/main.js", newWebDir + "/js") ;
-    //await copytoNewWeb("js/main.js.LICENSE.txt", newWebDir + "/js") ;
+    await copytoNewWeb("js/176.main.js", newWebDir + "/js") ;
+    await copytoNewWeb("js/961.main.js", newWebDir + "/js") ;
+    await copytoNewWeb("js/main.js", newWebDir + "/js") ;
+    await copytoNewWeb("js/main.js.LICENSE.txt", newWebDir + "/js") ;
 
   }
 
@@ -72,4 +77,5 @@
 
 </script>
     <H1>TEST INDEX PAGE 1</H1>
+    <button onclick="switchToPage2()">Switch To Page 2</button>
   </body>

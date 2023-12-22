@@ -1,0 +1,34 @@
+PODS:
+  - Capacitor (6.0.0-dev-20231222T034502.0):
+    - CapacitorCordova
+  - CapacitorCordova (6.0.0-dev-20231222T034502.0)
+  - CapacitorDevice (6.0.0-beta.1):
+    - Capacitor
+  - CapacitorFilesystem (6.0.0-beta.1):
+    - Capacitor
+
+DEPENDENCIES:
+  - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - CapacitorDevice (from `../../../capacitor-plugins/device`)
+  - CapacitorFilesystem (from `../../../capacitor-plugins/filesystem`)
+
+EXTERNAL SOURCES:
+  Capacitor:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorCordova:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorDevice:
+    :path: "../../../capacitor-plugins/device"
+  CapacitorFilesystem:
+    :path: "../../../capacitor-plugins/filesystem"
+
+SPEC CHECKSUMS:
+  Capacitor: b3a1afcdaf3bd95a9c78e218c1fa412c0327206b
+  CapacitorCordova: b3f5325aa32790d7cf46535b9af5f70fc28d45fc
+  CapacitorDevice: 74dfd29758d0291a6d560f3849b7de3ea0a97beb
+  CapacitorFilesystem: 47f90eb844f08192946315f3a0b4c12c3af4d4c2
+
+PODFILE CHECKSUM: 8d90ad1f8e30a1f1f0c404cccdb1e24fccc62bdc
+
+COCOAPODS: 1.12.1
