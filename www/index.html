@@ -59,22 +59,16 @@
   }
 
   async function copytoNewWeb(filename, dir, newname)
-  {
-      const copytoname = newname === undefined ? filename : newname;
-      const targetPath = newWebDir + "/" + copytoname;
-      console.log("Copying " + filename + " to " + targetPath );
+{
+    const copytoname = newname === undefined ? filename : newname;
+    const targetPath = dir + "/" + copytoname;
+    console.log("Copying " + filename + " to " + targetPath );
 
-      //console.log("Downloading via CapacitorHttp");
-      const options = {
-        url: "https://localhost/" + filename,
-        responseType: 'text'
-      }
-      const response = await CapacitorHttp.get(options);
-      console.log("Capacitor download data length = " + response.data.length);
-      console.log("contents = " + response.data);
-      //await appFileSystem.writefile(targetPath,response.data);
-
-  }
+    const response = await fetch(filename);
+    const data = await response.text();
+    console.log(filename + " web copy data length = " + data.length);
+    await appFileSystem.writefile(targetPath,data, true);
+}
 
 </script>
     <H1>TEST INDEX PAGE 1</H1>
